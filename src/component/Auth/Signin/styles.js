@@ -1,25 +1,27 @@
-import { makeStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
 export default makeStyles((theme) => ({
   paper: {
     display: "flex",
     flexDirection: "column",
-    alignContent: "center",
-    justify: "center",
+    padding: theme.spacing(3),
   },
-  textfield: {
-    margin: theme.spacing(1),
+  header: {
+    alignSelf: "center",
+    margin: theme.spacing(3),
+    fontFamily: "Sans-serif",
+    fontWeight: "600",
   },
-  button: { margin: theme.spacing(1) },
-  label: {
-    margin: theme.spacing(1),
+  button: {
+    alignSelf: "center",
+    marginTop: theme.spacing(1),
   },
   text: {
-    display: "flex",
-    justifyContent: "center",
-    marginBottom: theme.spacing(1),
-  },
-  avatar: {
     alignSelf: "center",
+    margin: theme.spacing(2),
+  },
+  form: {
+    display: "flex",
+    flexDirection: "column",
   },
 }));

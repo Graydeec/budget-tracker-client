@@ -23,7 +23,12 @@ const Header = () => {
         >
           <MenuIcon />
         </IconButton>
-        <Typography variant="h6" className={classes.title}>
+        <Typography
+          component={Link}
+          to="/"
+          variant="h6"
+          className={classes.title}
+        >
           Budget Tracker
         </Typography>
         <Button component={Link} to="/signin" color="inherit">

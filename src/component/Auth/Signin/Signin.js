@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Grid,
   Container,
@@ -11,41 +11,60 @@ import {
 import { Link } from "react-router-dom";
 
 import useStyle from "./styles.js";
+import Input from "../../Form/Input.js";
+import { userSignin } from "../../api/index.js";
 
+const initialState = { email: "", password: "" };
 const Signin = () => {
+  const [formData, setFormData] = useState(initialState);
   const classes = useStyle();
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let object;
+    console.log(formData);
+    try {
+      object = await userSignin(formData);
+      console.log(object);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
   return (
     <div>
       <h1>Welcome to sign in page</h1>
       <Container component="main" maxWidth="xs">
         <Paper elevation={10} className={classes.paper}>
-          <Avatar classname={classes.avatar}>G</Avatar>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={12}>
-              <Typography className={classes.typography} variant="h6">
-                Email
-              </Typography>
-              <TextField className={classes.label} variant="outlined" />
-            </Grid>
-            <Grid item xs={12} sm={12}>
-              <Typography className={classes.typography} variant="h6">
-                Paasword
-              </Typography>
-              <TextField className={classes.label} variant="outlined" />
-            </Grid>
-          </Grid>
-          <Typography className={classes.typography} variant="h6">
-            Email
+          <Typography className={classes.header} variant="h4">
+            Log in
           </Typography>
-          <TextField className={classes.label} variant="outlined" />
-          <Typography className={classes.typography} variant="h6">
-            Paasword
-          </Typography>
-          <TextField className={classes.label} variant="outlined" />
-          <Button className={classes.button} variant="outlined">
-            Sign In
-          </Button>
+          <form className={classes.form} onSubmit={handleSubmit}>
+            <Input
+              name="email"
+              content="Email"
+              placeholder="johnsmith@mail.com"
+              handleChange={handleChange}
+            />
+            <Input
+              name="password"
+              content="Password"
+              placeholder="*********"
+              handleChange={handleChange}
+            />
+            <Button
+              className={classes.button}
+              variant="contained"
+              size="medium"
+              color="primary"
+              onClick={handleSubmit}
+            >
+              Log In
+            </Button>
+          </form>
           <Typography className={classes.text} variant="body1">
             does not have an account? <Link to="/signup">sign up</Link>
           </Typography>
