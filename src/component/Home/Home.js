@@ -3,7 +3,10 @@ import React from "react";
 const Home = () => {
   return (
     <div>
-      <h1>Welcome to home page</h1>
+      // public
+      <h1>Welcome to public home page</h1>
+      // private
+      <h1>Welcome to private home page</h1>
     </div>
   );
 };

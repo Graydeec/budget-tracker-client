@@ -1,33 +1,48 @@
 import React, { useState } from "react";
-import { Paper, Container, Typography, Button } from "@material-ui/core";
+import {
+  Paper,
+  Container,
+  Typography,
+  Button,
+  CircularProgress,
+} from "@material-ui/core";
 import { Link, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import useStyle from "./styles.js";
 import Input from "../../Form/Input.js";
-import { userSignup } from "../../api/index.js";
+import { signup } from "../../../actions/auth.js";
 
 const initialState = { name: "", email: "", password: "", confirmPassword: "" };
 const Signup = () => {
   const [formData, setFormData] = useState(initialState);
   const [validName, setValidName] = useState(true);
   const [validEmail, setValidEmail] = useState(true);
-  let history = useHistory();
+  const [validPassword, setValidPassword] = useState(true);
+  const history = useHistory();
+  const dispatch = useDispatch();
   const classes = useStyle();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     let object;
-    console.log(formData);
+    let validForm = true;
     if (formData.name === "") {
       setValidName(false);
-      return;
+      validForm = false;
     }
-    try {
-      object = await userSignup(formData);
-      history.push("/");
-    } catch (error) {
-      alert(error);
+    if (formData.email === "") {
+      setValidEmail(false);
+      validForm = false;
     }
+    if (formData.password !== formData.confirmPassword) {
+      setValidPassword(false);
+      validForm = false;
+    }
+
+    if (!validForm) return;
+
+    dispatch(signup(formData, history));
   };
 
   const handleChange = (e) => {
@@ -61,14 +76,17 @@ const Signup = () => {
             <Input
               name="password"
               content="Password"
-              placeholder="*********"
+              placeholder="password"
               handleChange={handleChange}
+              error={!validPassword}
+              type="password"
             />
             <Input
               name="confirmPassword"
               content="Confirm Password"
-              placeholder="*********"
+              placeholder="password"
               handleChange={handleChange}
+              type="password"
             />
             <Button
               className={classes.button}

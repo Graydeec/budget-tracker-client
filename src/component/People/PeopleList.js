@@ -1,9 +1,14 @@
 import React from "react";
 
-const PeopleList = () => {
+import People from "./People/People";
+
+const PeopleList = ({ peopleList = [1, 2] }) => {
   return (
     <div>
-      <h1>Welcome to people list page</h1>
+      <h1>People List Component</h1>
+      {peopleList?.map((people) => (
+        <People />
+      ))}
     </div>
   );
 };

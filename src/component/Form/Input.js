@@ -2,7 +2,14 @@ import React from "react";
 import { Typography, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
-const Input = ({ name, handleChange, content, placeholder, error = false }) => {
+const Input = ({
+  name,
+  handleChange,
+  content,
+  placeholder,
+  error = false,
+  type = "text",
+}) => {
   const classes = useStyle();
 
   return (
@@ -14,8 +21,9 @@ const Input = ({ name, handleChange, content, placeholder, error = false }) => {
         size="small"
         placeholder={placeholder}
         onChange={handleChange}
-        helperText="You got an error"
+        helperText={`Invalid ${name}`}
         error={error}
+        type={type}
       />
     </div>
   );

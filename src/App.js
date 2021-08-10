@@ -6,6 +6,7 @@ import Signin from "./component/Auth/Signin/Signin";
 import Home from "./component/Home/Home";
 
 import "./App.css";
+import User from "./component/User/User";
 
 function App() {
   return (
@@ -22,6 +23,9 @@ function App() {
             </Route>
             <Route path="/signin">
               <Signin />
+            </Route>
+            <Route path="/user">
+              <User />
             </Route>
           </Switch>
         </div>

@@ -7,35 +7,31 @@ import {
   Typography,
   Button,
   Avatar,
+  CircularProgress,
 } from "@material-ui/core";
 import { Link, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import useStyle from "./styles.js";
 import Input from "../../Form/Input.js";
-import { userSignin } from "../../api/index.js";
+import { signin } from "../../../actions/auth.js";
 
 const initialState = { email: "", password: "" };
 const Signin = () => {
   const [formData, setFormData] = useState(initialState);
-
-  let history = useHistory();
+  const history = useHistory();
+  const dispatch = useDispatch();
   const classes = useStyle();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let object;
-    console.log(formData);
-    try {
-      object = await userSignin(formData);
-      history.push("/");
-    } catch (error) {
-      alert(error);
-    }
+    dispatch(signin(formData, history));
   };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
   return (
     <div>
       <h1>Welcome to sign in page</h1>
@@ -54,8 +50,9 @@ const Signin = () => {
             <Input
               name="password"
               content="Password"
-              placeholder="*********"
+              placeholder="password"
               handleChange={handleChange}
+              type="password"
             />
             <Button
               className={classes.button}
