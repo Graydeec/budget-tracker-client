@@ -8,7 +8,7 @@ import {
   Button,
   Avatar,
 } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import useStyle from "./styles.js";
 import Input from "../../Form/Input.js";
@@ -17,6 +17,8 @@ import { userSignin } from "../../api/index.js";
 const initialState = { email: "", password: "" };
 const Signin = () => {
   const [formData, setFormData] = useState(initialState);
+
+  let history = useHistory();
   const classes = useStyle();
 
   const handleSubmit = async (e) => {
@@ -25,9 +27,9 @@ const Signin = () => {
     console.log(formData);
     try {
       object = await userSignin(formData);
-      console.log(object);
+      history.push("/");
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   };
 

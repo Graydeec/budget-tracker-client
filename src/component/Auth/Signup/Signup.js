@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Paper, Container, Typography, Button } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import useStyle from "./styles.js";
 import Input from "../../Form/Input.js";
@@ -9,17 +9,24 @@ import { userSignup } from "../../api/index.js";
 const initialState = { name: "", email: "", password: "", confirmPassword: "" };
 const Signup = () => {
   const [formData, setFormData] = useState(initialState);
+  const [validName, setValidName] = useState(true);
+  const [validEmail, setValidEmail] = useState(true);
+  let history = useHistory();
   const classes = useStyle();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     let object;
     console.log(formData);
+    if (formData.name === "") {
+      setValidName(false);
+      return;
+    }
     try {
       object = await userSignup(formData);
-      console.log(object);
+      history.push("/");
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   };
 
@@ -42,12 +49,14 @@ const Signup = () => {
               content="Name"
               placeholder="John Smith"
               handleChange={handleChange}
+              error={!validName}
             />
             <Input
               name="email"
               content="Email"
               placeholder="johnsmith@mail.com"
               handleChange={handleChange}
+              error={!validEmail}
             />
             <Input
               name="password"
@@ -56,7 +65,7 @@ const Signup = () => {
               handleChange={handleChange}
             />
             <Input
-              name="confirmPassowrd"
+              name="confirmPassword"
               content="Confirm Password"
               placeholder="*********"
               handleChange={handleChange}
