@@ -52,7 +52,6 @@ const Signup = () => {
 
   return (
     <div>
-      <h1>Welcome to sign up page</h1>
       <Container component="main" maxWidth="xs">
         <Paper className={classes.paper} elevation={10}>
           <form className={classes.form} onSubmit={handleSubmit}>

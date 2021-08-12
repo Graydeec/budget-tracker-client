@@ -1,14 +1,35 @@
 import React from "react";
+import {
+  Paper,
+  FormControl,
+  Typography,
+  TextField,
+  Button,
+} from "@material-ui/core";
 
-const styles = () => {
+import useStyles from "./styles";
+
+const Form = () => {
+  const classes = useStyles();
   return (
     <div>
-      <h1>Form Component</h1>
-      <p>Input 1</p>
-      <p>Input 2</p>
-      <p>Input 3</p>
+      <Paper className={classes.root}>
+        <Typography variant="h3">Expense Form</Typography>
+        <FormControl className={classes.form}>
+          <Typography>Name</Typography>
+          <TextField></TextField>
+          <Typography>Amount</Typography>
+          <TextField></TextField>
+          <Typography>Payer</Typography>
+          <TextField></TextField>
+          <Typography>NumberOfPeople</Typography>
+          <TextField></TextField>
+          <Button>Submit</Button>
+          <Button>Clear</Button>
+        </FormControl>
+      </Paper>
     </div>
   );
 };
 
-export default styles;
+export default Form;

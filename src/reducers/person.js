@@ -1,3 +1,3 @@
-export default (persons = [], action) => {
-  return persons;
+export default (states = [], action) => {
+  return states;
 };

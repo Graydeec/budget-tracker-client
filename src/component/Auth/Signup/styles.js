@@ -5,6 +5,7 @@ export default makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     padding: theme.spacing(3),
+    margin: theme.spacing(10, 0, 0),
   },
   header: {
     alignSelf: "center",

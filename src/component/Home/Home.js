@@ -1,12 +1,22 @@
 import React from "react";
+import { Typography } from "@material-ui/core";
+
+import useStyles from "./styles";
 
 const Home = () => {
+  const classes = useStyles();
+
   return (
-    <div>
-      // public
-      <h1>Welcome to public home page</h1>
-      // private
-      <h1>Welcome to private home page</h1>
+    <div className={classes.container}>
+      <Typography className={classes.welcomeText} variant="h1">
+        Welcome to
+      </Typography>
+      <Typography className={classes.welcomeText} variant="h1">
+        Budget Tracker
+      </Typography>
+      <Typography variant="h2">
+        Best way to keep track of your trip expense
+      </Typography>
     </div>
   );
 };

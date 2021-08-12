@@ -4,6 +4,7 @@ import Header from "./component/Header/Header";
 import Signup from "./component/Auth/Signup/Signup";
 import Signin from "./component/Auth/Signin/Signin";
 import Home from "./component/Home/Home";
+import Trip from "./component/Trip/Trip";
 
 import "./App.css";
 import User from "./component/User/User";
@@ -26,6 +27,9 @@ function App() {
             </Route>
             <Route path="/user">
               <User />
+            </Route>
+            <Route path="/trip">
+              <Trip />
             </Route>
           </Switch>
         </div>

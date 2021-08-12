@@ -34,7 +34,6 @@ const Signin = () => {
 
   return (
     <div>
-      <h1>Welcome to sign in page</h1>
       <Container component="main" maxWidth="xs">
         <Paper elevation={10} className={classes.paper}>
           <Typography className={classes.header} variant="h4">
