@@ -12,7 +12,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 
 import TripItem from "../TripItem/TripItem";
-import { getTrips, createTrip, deleteTrip } from "../../actions/trip";
+import { getTripInfos, createTrip, deleteTrip } from "../../actions/trip";
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 import useStyle from "./styles";
 import UserNotSignIn from "../Error/UserNotSignIn/UserNotSignIn";
@@ -25,10 +25,13 @@ const User = () => {
   const dispatch = useDispatch();
   const classes = useStyle();
   const user = JSON.parse(localStorage.getItem("profile"));
+  const userTrips = useState([]);
+  console.log(user, "user");
 
   useEffect(() => {
-    console.log(trips);
-  }, [trips]);
+    console.log(trips, "trips");
+    dispatch(getTripInfos());
+  }, [dispatch]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, date: getToday(), name: e.target.value });
@@ -92,7 +95,7 @@ const User = () => {
               Trip
             </Button>
 
-            <Button onClick={() => dispatch(getTrips())}>FetchTrips</Button>
+            <Button>FetchTrips</Button>
             <div>
               {trips?.map((trip, idx) => (
                 <Card key={idx} className={classes.tripItem}>

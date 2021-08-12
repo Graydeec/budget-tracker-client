@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Typography, Paper } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
@@ -7,10 +7,21 @@ import Expenses from "../Expenses/Expenses";
 import Form from "../Form/Form";
 import useStyles from "./styles";
 import UserNotSignIn from "../Error/UserNotSignIn/UserNotSignIn";
+import { TRIP_INFO } from "../../constants/actionTypes";
+import { tripInfo } from "../../api";
+import { useSelector } from "react-redux";
 
 const Trip = () => {
   const classes = useStyles();
+  const [tripName, setTripName] = useState("Trip");
+  const tripId = useSelector((state) => state.trip.trip);
   const user = JSON.parse(localStorage.getItem("profile"));
+
+  useEffect(async () => {
+    console.log("tripId", tripId);
+    const info = await tripInfo(tripId);
+    console.log("info", info);
+  }, [tripId]);
 
   if (!user?.result?.name) return <UserNotSignIn />;
 
