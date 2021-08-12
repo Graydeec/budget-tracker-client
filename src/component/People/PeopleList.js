@@ -4,8 +4,10 @@ import { Typography, Paper } from "@material-ui/core";
 import People from "./People/People";
 import useStyles from "./styles";
 
-const PeopleList = ({ peopleList = [1, 2] }) => {
+const PeopleList = () => {
   const classes = useStyles();
+
+  const peopleList = ["John", "Billy", "Kelly", "Shuyi"];
   return (
     <div>
       <Paper className={classes.paper}>

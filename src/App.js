@@ -5,6 +5,7 @@ import Signup from "./component/Auth/Signup/Signup";
 import Signin from "./component/Auth/Signin/Signin";
 import Home from "./component/Home/Home";
 import Trip from "./component/Trip/Trip";
+import Error from "./component/Error/Error";
 
 import "./App.css";
 import User from "./component/User/User";
@@ -16,21 +17,12 @@ function App() {
         <Header />
         <div className="App--Content">
           <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route path="/signup">
-              <Signup />
-            </Route>
-            <Route path="/signin">
-              <Signin />
-            </Route>
-            <Route path="/user">
-              <User />
-            </Route>
-            <Route path="/trip">
-              <Trip />
-            </Route>
+            <Route exact path="/" component={Home} />
+            <Route path="/signup" component={Signup} />
+            <Route path="/signin" component={Signin} />
+            <Route path="/user" component={User} />
+            <Route path="/trip" component={Trip} />
+            <Route component={Error} />
           </Switch>
         </div>
       </div>

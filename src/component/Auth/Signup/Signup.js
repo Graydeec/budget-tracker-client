@@ -5,6 +5,7 @@ import {
   Typography,
   Button,
   CircularProgress,
+  Modal,
 } from "@material-ui/core";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -52,6 +53,12 @@ const Signup = () => {
 
   return (
     <div>
+      <Modal className={classes.modal} open>
+        <Container className={classes.modalContainter} maxWidth="md">
+          <CircularProgress />
+          <Typography variant="h6">Loading</Typography>
+        </Container>
+      </Modal>
       <Container component="main" maxWidth="xs">
         <Paper className={classes.paper} elevation={10}>
           <form className={classes.form} onSubmit={handleSubmit}>

@@ -21,7 +21,7 @@ const Input = ({
         size="small"
         placeholder={placeholder}
         onChange={handleChange}
-        helperText={`Invalid ${name}`}
+        helperText={error ? `Invalid ${name}` : ""}
         error={error}
         type={type}
       />

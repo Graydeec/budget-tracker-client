@@ -15,6 +15,7 @@ import TripItem from "../TripItem/TripItem";
 import { getTrips, createTrip, deleteTrip } from "../../actions/trip";
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 import useStyle from "./styles";
+import UserNotSignIn from "../Error/UserNotSignIn/UserNotSignIn";
 
 const initialFormData = { name: "", date: "", creator: "", users: [] };
 const User = () => {
@@ -105,7 +106,7 @@ const User = () => {
     );
   }
 
-  return <div>Please sign in to view your account</div>;
+  return <UserNotSignIn />;
 };
 
 export default User;

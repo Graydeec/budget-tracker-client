@@ -6,13 +6,13 @@ import PeopleList from "../People/PeopleList";
 import Expenses from "../Expenses/Expenses";
 import Form from "../Form/Form";
 import useStyles from "./styles";
+import UserNotSignIn from "../Error/UserNotSignIn/UserNotSignIn";
 
 const Trip = () => {
   const classes = useStyles();
   const user = JSON.parse(localStorage.getItem("profile"));
 
-  if (!user?.result?.name)
-    return <div>Please sign in to view your account</div>;
+  if (!user?.result?.name) return <UserNotSignIn />;
 
   return (
     <div>

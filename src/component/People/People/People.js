@@ -3,6 +3,7 @@ import { Avatar, Typography } from "@material-ui/core";
 
 import useStyles from "./styles";
 import { useSelector } from "react-redux";
+import Ant from "../../../images/Badger.svg";
 
 const People = () => {
   const classes = useStyles();
@@ -19,7 +20,7 @@ const People = () => {
 
   return (
     <div className={classes.container}>
-      <Avatar></Avatar>
+      <Avatar src={Ant}></Avatar>
       <Typography variant="p">Name</Typography>
       <Typography variant="p">${amountPaid}</Typography>
     </div>

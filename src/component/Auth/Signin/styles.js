@@ -25,4 +25,21 @@ export default makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
   },
+  modal: {
+    display: "flex",
+    alignItems: "center",
+    padding: theme.spacing(1),
+  },
+  modalContainter: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: theme.palette.background.paper,
+    border: "2px solid #000",
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(3, 4, 2),
+    display: "flex",
+    flexDirection: "column",
+    width: "50vh",
+  },
 }));
