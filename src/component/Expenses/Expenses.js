@@ -16,7 +16,7 @@ import Expense from "./Expense/Expense";
 import useStyles from "./styles";
 import * as actionType from "../../constants/actionTypes";
 
-const Expenses = () => {
+const Expenses = ({ expenses }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -78,7 +78,7 @@ const Expenses = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row, idx) => (
+              {expenses?.map((row, idx) => (
                 <StyledTableRow key={row.name + idx}>
                   <StyledTableCell>{row.name}</StyledTableCell>
                   <StyledTableCell>{row.amount}</StyledTableCell>

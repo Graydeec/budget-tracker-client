@@ -11,15 +11,17 @@ import { TRIP_INFO } from "../../constants/actionTypes";
 import { tripInfo } from "../../api";
 import { useSelector } from "react-redux";
 
+const initialTrip = { name: "Trip", expense: [], people: [] };
 const Trip = () => {
   const classes = useStyles();
-  const [tripName, setTripName] = useState("Trip");
+  const [trip, setTrip] = useState(initialTrip);
   const tripId = useSelector((state) => state.trip.trip);
   const user = JSON.parse(localStorage.getItem("profile"));
 
   useEffect(async () => {
     console.log("tripId", tripId);
-    const info = await tripInfo(tripId);
+    const info = await tripInfo({ id: tripId });
+    setTrip(info?.data?.trip);
     console.log("info", info);
   }, [tripId]);
 
@@ -31,12 +33,12 @@ const Trip = () => {
         <Typography variant="h5" component={Link} to="/user">
           Go Back
         </Typography>
-        <Typography variant="h4">Trip Name</Typography>
+        <Typography variant="h4">{trip.name}</Typography>
       </Paper>
       <div className={classes.contentPanel}>
         <div className={classes.contentLeftPanel}>
-          <PeopleList />
-          <Expenses />
+          <PeopleList people={trip.people} />
+          <Expenses expenses={trip.expense} />
         </div>
         <Form className={classes.form} />
       </div>

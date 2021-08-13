@@ -13,7 +13,7 @@ const TripItem = ({ trip }) => {
   const dispatch = useDispatch();
   const [creatorName, setCreatorName] = useState("");
   console.log(trip, "trip");
-  const { name, createdAt, creator, _id } = trip;
+  const { name, createdAt, creator, tripId } = trip;
 
   useEffect(async () => {
     console.log("creator", creator);
@@ -27,7 +27,7 @@ const TripItem = ({ trip }) => {
   };
 
   return (
-    <div className={classes.card} onClick={() => handleRedirect(_id)}>
+    <div className={classes.card} onClick={() => handleRedirect(tripId)}>
       <Typography variant="h5">{name}</Typography>
       <Typography variant="h6">{creatorName}</Typography>
       <Typography variant="h6">Created at: {createdAt}</Typography>
