@@ -1,10 +1,10 @@
 import * as api from "../api/index.js";
 import * as actionType from "../constants/actionTypes";
 
-export const getTripInfos = () => async (dispatch) => {
+export const getUserTrips = (userid) => async (dispatch) => {
   console.log("Get all the trips");
   try {
-    const tripInfos = await api.userTripInfos();
+    const tripInfos = await api.getUserTrips(userid);
     console.log(tripInfos, "tripInfos");
     dispatch({ type: actionType.TRIP_FETCH_ALL, payload: tripInfos });
   } catch (error) {

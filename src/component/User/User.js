@@ -12,7 +12,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 
 import TripItem from "../TripItem/TripItem";
-import { getTripInfos, createTrip, deleteTrip } from "../../actions/trip";
+import { getUserTrips, createTrip, deleteTrip } from "../../actions/trip";
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 import useStyle from "./styles";
 import UserNotSignIn from "../Error/UserNotSignIn/UserNotSignIn";
@@ -30,7 +30,7 @@ const User = () => {
 
   useEffect(() => {
     console.log(trips, "trips");
-    dispatch(getTripInfos());
+    if (user?.result?._id) dispatch(getUserTrips(user?.result?._id));
   }, [dispatch]);
 
   const handleChange = (e) => {
