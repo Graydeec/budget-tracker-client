@@ -16,6 +16,7 @@ const Trip = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [trip, setTrip] = useState(initialTrip);
+  const [tracker, setTracker] = useState(false);
   const tripId = useSelector((state) => state.trip.trip);
   const user = JSON.parse(localStorage.getItem("profile"));
 
@@ -37,7 +38,11 @@ const Trip = () => {
       type: actionType.EXPENSE_FETCH_ALL,
       payload: expenses?.data?.expenses,
     });
-  }, [tripId, dispatch]);
+  }, [tripId, tracker, dispatch]);
+
+  const updateData = () => {
+    setTracker(!tracker);
+  };
 
   if (!user?.result?.name) return <UserNotSignIn />;
 
@@ -51,8 +56,8 @@ const Trip = () => {
       </Paper>
       <div className={classes.contentPanel}>
         <div className={classes.contentLeftPanel}>
-          <PeopleList />
-          <Expenses expenses={trip.expense} />
+          <PeopleList updateData={updateData} />
+          <Expenses expenses={trip.expense} updateData={updateData} />
         </div>
         <Form className={classes.form} />
       </div>

@@ -14,7 +14,7 @@ import People from "./People/People";
 import { createPerson } from "../../actions/person";
 import useStyles from "./styles";
 
-const PeopleList = () => {
+const PeopleList = ({ updateData }) => {
   const classes = useStyles();
   const [modalOpen, setModalOpen] = useState(false);
   const [peopleName, setPeopleName] = useState("");
@@ -33,6 +33,7 @@ const PeopleList = () => {
   const handleAddPerson = () => {
     dispatch(createPerson(tripid, { name: peopleName }));
     setPeopleName("");
+    updateData();
     handleOpenModal();
   };
 

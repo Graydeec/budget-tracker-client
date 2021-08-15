@@ -17,4 +17,7 @@ export default makeStyles((theme) => ({
       margin: theme.spacing(1, 0, 0),
     },
   },
+  payerField: {
+    display: "flex",
+  },
 }));
