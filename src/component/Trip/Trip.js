@@ -21,25 +21,23 @@ const Trip = () => {
 
   useEffect(async () => {
     if (!tripId) return;
-    console.log("tripId", tripId);
     const info = await getTripInfo(tripId);
-    console.log("info", info);
+
     setTrip(info?.data?.trip);
+
     const persons = await getTripPersons(tripId);
     const expenses = await getTripExpenses(tripId);
-    console.log("persons", persons);
+
     dispatch({
       type: actionType.PERSON_FETCH_ALL,
-      payload: persons?.data?.persons,
+      payload: persons?.data?.persons[0].persons,
     });
 
     dispatch({
       type: actionType.EXPENSE_FETCH_ALL,
-      payload: expenses?.data?.persons,
+      payload: expenses?.data?.expenses,
     });
-
-    console.log("info", info);
-  }, [tripId]);
+  }, [tripId, dispatch]);
 
   if (!user?.result?.name) return <UserNotSignIn />;
 
@@ -53,7 +51,7 @@ const Trip = () => {
       </Paper>
       <div className={classes.contentPanel}>
         <div className={classes.contentLeftPanel}>
-          <PeopleList people={trip.people} />
+          <PeopleList />
           <Expenses expenses={trip.expense} />
         </div>
         <Form className={classes.form} />

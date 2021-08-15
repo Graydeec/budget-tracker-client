@@ -17,6 +17,10 @@ export default (
       return { ...state, loading: true };
     case actionType.LOADING_DONE:
       return { ...state, loading: false };
+    case actionType.ERROR_TRUE:
+      return { ...state, errors: action.payload };
+    case actionType.ERROR_FALSE:
+      return { ...state, errors: null };
     default:
       return state;
   }

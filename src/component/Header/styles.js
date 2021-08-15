@@ -10,4 +10,14 @@ export const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  userField: {
+    display: "flex",
+    alignItems: "center",
+    "& > *": {
+      margin: theme.spacing(0, 1, 0),
+    },
+  },
+  button: {
+    margin: theme.spacing(0, 1, 0),
+  },
 }));

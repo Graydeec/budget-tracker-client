@@ -8,14 +8,20 @@ import {
   Button,
 } from "@material-ui/core";
 
+import { useDispatch, useSelector } from "react-redux";
+
 import People from "./People/People";
+import { createPerson } from "../../actions/person";
 import useStyles from "./styles";
 
-const PeopleList = ({ people }) => {
+const PeopleList = () => {
   const classes = useStyles();
   const [modalOpen, setModalOpen] = useState(false);
-  const [peopleList, setPeopleList] = useState(people);
   const [peopleName, setPeopleName] = useState("");
+  const peopleList = useSelector((state) => state.person.persons);
+  const tripid = useSelector((state) => state.trip.trip);
+  const dispatch = useDispatch();
+
   const handleChange = (e) => {
     setPeopleName(e.target.value);
   };
@@ -25,7 +31,7 @@ const PeopleList = ({ people }) => {
   };
 
   const handleAddPerson = () => {
-    setPeopleList([...peopleList, peopleName]);
+    dispatch(createPerson(tripid, { name: peopleName }));
     setPeopleName("");
     handleOpenModal();
   };
@@ -68,7 +74,7 @@ const PeopleList = ({ people }) => {
         <div className={classes.list}>
           <Avatar onClick={handleOpenModal}>+</Avatar>
           {peopleList?.map((p, idx) => (
-            <People key={idx} />
+            <People key={idx} person={p} />
           ))}
         </div>
       </Paper>

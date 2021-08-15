@@ -37,7 +37,20 @@ export default makeStyles((theme) => ({
   buttonIcon: {
     marginRight: theme.spacing(1),
   },
+  newUserField: {
+    padding: theme.spacing(3, 3, 3),
+    display: "flex",
+    flexDirection: "column",
+    height: "30vh",
+  },
+  newUserText: {
+    margin: theme.spacing(2, 0, 0),
+    textAlign: "center",
+  },
   tripItem: {
     marginTop: theme.spacing(3),
+  },
+  addBtn: {
+    margin: theme.spacing(2, 0, 0),
   },
 }));

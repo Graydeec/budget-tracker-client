@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Grid,
   Container,
@@ -17,15 +17,25 @@ import { useDispatch, useSelector } from "react-redux";
 import useStyle from "./styles.js";
 import Input from "../../Form/Input.js";
 import { signin } from "../../../actions/auth.js";
-import { LOADING_DATA } from "../../../constants/actionTypes";
+import {
+  ERROR_FALSE,
+  LOADING_DATA,
+  LOADING_DONE,
+} from "../../../constants/actionTypes";
 
 const initialState = { email: "", password: "" };
 const Signin = () => {
   const [formData, setFormData] = useState(initialState);
   const loading = useSelector((state) => state.auth.loading);
+  const error = useSelector((state) => state.auth.errors);
   const history = useHistory();
   const dispatch = useDispatch();
   const classes = useStyle();
+
+  useEffect(() => {
+    dispatch({ type: ERROR_FALSE });
+    dispatch({ type: LOADING_DONE });
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,6 +46,8 @@ const Signin = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  console.log("error", error, error !== null);
 
   return (
     <div>
@@ -57,6 +69,7 @@ const Signin = () => {
                 content="Email"
                 placeholder="johnsmith@mail.com"
                 handleChange={handleChange}
+                type="email"
               />
               <Input
                 name="password"
@@ -65,6 +78,11 @@ const Signin = () => {
                 handleChange={handleChange}
                 type="password"
               />
+              {error !== null && (
+                <Typography className={classes.errorText}>
+                  {error.message || " Error"}
+                </Typography>
+              )}
               <Button
                 type="submit"
                 className={classes.button}

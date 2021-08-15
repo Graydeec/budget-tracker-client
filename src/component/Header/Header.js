@@ -26,9 +26,11 @@ const Header = () => {
 
     setUser(JSON.parse(localStorage.getItem("profile")));
   }, [location]);
+
   const logout = () => {
     localStorage.clear();
   };
+
   return (
     <AppBar position="static">
       <Toolbar>
@@ -49,11 +51,14 @@ const Header = () => {
           Budget Tracker
         </Typography>
         {user?.result ? (
-          <div>
+          <div className={classes.userField}>
             <Typography>{user.result.name}</Typography>
+            <Button component={Link} to="/user" color="inherit">
+              Trips
+            </Button>
             <Button
               component={Link}
-              to="/home"
+              to="/signin"
               color="inherit"
               onClick={logout}
             >
@@ -61,7 +66,12 @@ const Header = () => {
             </Button>
           </div>
         ) : (
-          <Button component={Link} to="/signin" color="inherit">
+          <Button
+            component={Link}
+            to="/signin"
+            color="inherit"
+            className={classes.button}
+          >
             Login
           </Button>
         )}

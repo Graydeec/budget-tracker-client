@@ -14,14 +14,31 @@ export const getUserTrips = (userid) => async (dispatch) => {
 };
 
 export const createTrip = (formData) => async (dispatch) => {
-  console.log("Creating a trip");
+  console.log("Creating a trip", formData);
 
-  dispatch({ type: actionType.TRIP_CREATE, payload: formData });
+  try {
+    const newTrip = await api.userCreateTrip(formData);
+    const tripid = newTrip?.data?.newTrip._id;
+    const newPersonCollection = await api.createTripPersonCollection(tripid);
+    const newExpenseCollection = await api.createTripExpenseCollection(tripid);
+
+    console.log("new collections", newPersonCollection, newExpenseCollection);
+    dispatch({ type: actionType.TRIP_CREATE, payload: formData });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
-export const deleteTrip = () => async (dispatch) => {
-  console.log("Deleting a trip");
-  dispatch({ type: actionType.TRIP_DELETE });
+export const deleteTrip = (tripid) => async (dispatch) => {
+  try {
+    console.log("Deleting a trip", tripid);
+    await api.userDeleteTrip(tripid);
+    await api.deleteTripExpenseCollection(tripid);
+    await api.deleteTripPersonCollection(tripid);
+    dispatch({ type: actionType.TRIP_DELETE, payload: tripid });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const example = [

@@ -17,7 +17,7 @@ import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOut
 import useStyle from "./styles";
 import UserNotSignIn from "../Error/UserNotSignIn/UserNotSignIn";
 
-const initialFormData = { name: "", date: "", creator: "", users: [] };
+const initialFormData = { name: "", createdAt: "", creator: "", users: [] };
 const User = () => {
   const [openModal, setOpenModal] = useState(false);
   const [formData, setFormData] = useState(initialFormData);
@@ -26,19 +26,24 @@ const User = () => {
   const classes = useStyle();
   const user = JSON.parse(localStorage.getItem("profile"));
   const userTrips = useState([]);
-  console.log(user, "user");
 
   useEffect(() => {
-    console.log(trips, "trips");
     if (user?.result?._id) dispatch(getUserTrips(user?.result?._id));
   }, [dispatch]);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, date: getToday(), name: e.target.value });
+    setFormData({ ...formData, name: e.target.value });
   };
 
   const handleAddTrip = () => {
-    dispatch(createTrip(formData));
+    dispatch(
+      createTrip({
+        ...formData,
+        createdAt: getToday(),
+        creator: user?.result?._id,
+        users: [user?.result?._id],
+      })
+    );
     handleOpenModal();
   };
 
@@ -69,6 +74,7 @@ const User = () => {
                     onClick={handleAddTrip}
                     variant="contained"
                     color="primary"
+                    type="submit"
                   >
                     Add
                   </Button>
@@ -85,24 +91,44 @@ const User = () => {
             <Typography variant="h4" className={classes.welcomeText}>
               Welcome Back! {user?.result.name.toUpperCase()}
             </Typography>
-            <Button
-              color="primary"
-              variant="contained"
-              size="large"
-              onClick={handleOpenModal}
-            >
-              <AddCircleOutlineOutlinedIcon className={classes.buttonIcon} />{" "}
-              Trip
-            </Button>
-
-            <Button>FetchTrips</Button>
-            <div>
-              {trips?.map((trip, idx) => (
-                <Card key={idx} className={classes.tripItem}>
-                  <TripItem trip={trip} />
-                </Card>
-              ))}
-            </div>
+            {trips?.length === 0 ? (
+              <div className={classes.newUserField}>
+                <Typography variant="h4" className={classes.newUserText}>
+                  Add Your First Trip
+                </Typography>
+                <Button
+                  className={classes.addBtn}
+                  color="primary"
+                  variant="contained"
+                  size="large"
+                  onClick={handleOpenModal}
+                >
+                  <AddCircleOutlineOutlinedIcon
+                    className={classes.buttonIcon}
+                  />{" "}
+                  Trip
+                </Button>
+              </div>
+            ) : (
+              <div>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  size="large"
+                  onClick={handleOpenModal}
+                >
+                  <AddCircleOutlineOutlinedIcon
+                    className={classes.buttonIcon}
+                  />{" "}
+                  Trip
+                </Button>
+                {trips?.map((trip, idx) => (
+                  <Card key={idx} className={classes.tripItem}>
+                    <TripItem trip={trip} />
+                  </Card>
+                ))}
+              </div>
+            )}
           </Paper>
         </Container>
       </div>

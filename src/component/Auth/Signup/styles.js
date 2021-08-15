@@ -17,6 +17,11 @@ export default makeStyles((theme) => ({
     alignSelf: "center",
     marginTop: theme.spacing(1),
   },
+  errorText: {
+    alignSelf: "center",
+    color: "red",
+    margin: theme.spacing(2),
+  },
   text: {
     alignSelf: "center",
     margin: theme.spacing(2),

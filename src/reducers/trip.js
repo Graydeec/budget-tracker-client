@@ -13,7 +13,10 @@ export default (state = initialState, action) => {
     case actionType.TRIP_CREATE:
       return { ...state, trips: [...state.trips, action.payload] };
     case actionType.TRIP_DELETE:
-      return state;
+      return {
+        ...state,
+        trips: state.trips.filter((t) => t._id !== action.payload),
+      };
     default:
       return state;
   }

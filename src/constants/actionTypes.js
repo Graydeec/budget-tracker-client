@@ -4,6 +4,8 @@ export const AUTH = "AUTH";
 export const LOGOUT = "LOGOUT";
 export const LOADING_DATA = "LOADING_DATA";
 export const LOADING_DONE = "LOADING_DONE";
+export const ERROR_TRUE = "ERROR_TRUE";
+export const ERROR_FALSE = "ERROR_FALSE";
 
 export const EXPENSE_CREATE = "EXPENSE_CREATE";
 export const EXPENSE_DELETE = "EXPENSE_DELETE";

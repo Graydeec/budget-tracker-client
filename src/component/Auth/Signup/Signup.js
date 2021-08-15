@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Paper,
   Container,
@@ -8,11 +8,12 @@ import {
   Modal,
 } from "@material-ui/core";
 import { Link, useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import useStyle from "./styles.js";
 import Input from "../../Form/Input.js";
 import { signup } from "../../../actions/auth.js";
+import { ERROR_FALSE, LOADING_DONE } from "../../../constants/actionTypes.js";
 
 const initialState = { name: "", email: "", password: "", confirmPassword: "" };
 const Signup = () => {
@@ -20,40 +21,30 @@ const Signup = () => {
   const [validName, setValidName] = useState(true);
   const [validEmail, setValidEmail] = useState(true);
   const [validPassword, setValidPassword] = useState(true);
+  const error = useSelector((state) => state.auth.errors);
+  const loading = useSelector((state) => state.auth.loading);
   const history = useHistory();
   const dispatch = useDispatch();
   const classes = useStyle();
 
+  useEffect(() => {
+    dispatch({ type: ERROR_FALSE });
+    dispatch({ type: LOADING_DONE });
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let object;
-    let validForm = true;
-    if (formData.name === "") {
-      setValidName(false);
-      validForm = false;
-    }
-    if (formData.email === "") {
-      setValidEmail(false);
-      validForm = false;
-    }
-    if (formData.password !== formData.confirmPassword) {
-      setValidPassword(false);
-      validForm = false;
-    }
-
-    if (!validForm) return;
-
     dispatch(signup(formData, history));
+    setFormData(initialState);
   };
 
   const handleChange = (e) => {
-    console.log(formData);
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   return (
     <div>
-      <Modal className={classes.modal} open>
+      <Modal className={classes.modal} open={loading}>
         <Container className={classes.modalContainter} maxWidth="md">
           <CircularProgress />
           <Typography variant="h6">Loading</Typography>
@@ -94,11 +85,17 @@ const Signup = () => {
               handleChange={handleChange}
               type="password"
             />
+            {error !== null && (
+              <Typography className={classes.errorText}>
+                {error.message || "Error"}
+              </Typography>
+            )}
             <Button
               className={classes.button}
               variant="contained"
               size="medium"
               color="primary"
+              type="submit"
               onClick={handleSubmit}
             >
               sign up
