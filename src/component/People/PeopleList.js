@@ -18,7 +18,8 @@ const PeopleList = ({ updateData }) => {
   const classes = useStyles();
   const [modalOpen, setModalOpen] = useState(false);
   const [peopleName, setPeopleName] = useState("");
-  const peopleList = useSelector((state) => state.person.persons);
+  //const peopleList = useSelector((state) => state.person.persons);
+  const peopleList = [];
   const tripid = useSelector((state) => state.trip.trip);
   const dispatch = useDispatch();
 

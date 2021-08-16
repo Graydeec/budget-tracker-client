@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Typography, Paper } from "@material-ui/core";
+import { Typography, Paper, Grid } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -47,20 +47,32 @@ const Trip = () => {
   if (!user?.result?.name) return <UserNotSignIn />;
 
   return (
-    <div>
-      <Paper className={classes.header}>
-        <Typography variant="h5" component={Link} to="/user">
-          Go Back
-        </Typography>
-        <Typography variant="h4">{trip.name}</Typography>
-      </Paper>
-      <div className={classes.contentPanel}>
-        <div className={classes.contentLeftPanel}>
-          <PeopleList updateData={updateData} />
-          <Expenses expenses={trip.expense} updateData={updateData} />
-        </div>
-        <Form className={classes.form} />
-      </div>
+    <div className={classes.root}>
+      <Grid container spacing={2}>
+        <Grid item container spacing={2}>
+          <Grid item xs={12}>
+            <Paper className={classes.header}>
+              <Typography variant="h5" component={Link} to="/user">
+                Go Back
+              </Typography>
+              <Typography variant="h4">{trip.name}</Typography>
+            </Paper>
+          </Grid>
+        </Grid>
+        <Grid item xs={12} container spacing={2}>
+          <Grid item xs>
+            <Grid item xs={12}>
+              <PeopleList updateData={updateData} />
+            </Grid>
+            <Grid item xs={12}>
+              <Expenses expenses={trip.expense} updateData={updateData} />
+            </Grid>
+          </Grid>
+          <Grid xs={3} item>
+            <Form className={classes.form} />
+          </Grid>
+        </Grid>
+      </Grid>
     </div>
   );
 };
