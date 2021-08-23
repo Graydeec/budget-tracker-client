@@ -22,6 +22,8 @@ const Trip = () => {
 
   useEffect(async () => {
     if (!tripId) return;
+
+    console.log("trip", trip);
     const info = await getTripInfo(tripId);
 
     setTrip(info?.data?.trip);
@@ -34,10 +36,10 @@ const Trip = () => {
       payload: persons?.data?.persons[0].persons,
     });
 
-    dispatch({
-      type: actionType.EXPENSE_FETCH_ALL,
-      payload: expenses?.data?.expenses,
-    });
+    // dispatch({
+    //   type: actionType.EXPENSE_FETCH_ALL,
+    //   payload: expenses?.data?.expenses,
+    // });
   }, [tripId, tracker, dispatch]);
 
   const updateData = () => {
@@ -60,7 +62,7 @@ const Trip = () => {
           </Grid>
         </Grid>
         <Grid item xs={12} container spacing={2}>
-          <Grid item xs>
+          <Grid item xs={12} md={8} lg={9}>
             <Grid item xs={12}>
               <PeopleList updateData={updateData} />
             </Grid>
@@ -68,8 +70,8 @@ const Trip = () => {
               <Expenses expenses={trip.expense} updateData={updateData} />
             </Grid>
           </Grid>
-          <Grid xs={3} item>
-            <Form className={classes.form} />
+          <Grid xs={12} md={4} lg={3} item>
+            <Form className={classes.form} updateData={updateData} />
           </Grid>
         </Grid>
       </Grid>

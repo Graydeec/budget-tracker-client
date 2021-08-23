@@ -6,6 +6,7 @@ import {
   Modal,
   TextField,
   Button,
+  Grid,
 } from "@material-ui/core";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -17,9 +18,10 @@ import useStyles from "./styles";
 const PeopleList = ({ updateData }) => {
   const classes = useStyles();
   const [modalOpen, setModalOpen] = useState(false);
+  const [mode, setMode] = useState("");
   const [peopleName, setPeopleName] = useState("");
-  //const peopleList = useSelector((state) => state.person.persons);
-  const peopleList = [];
+  const peopleList = useSelector((state) => state.person.persons);
+  //const peopleList = [];
   const tripid = useSelector((state) => state.trip.trip);
   const dispatch = useDispatch();
 
@@ -27,8 +29,9 @@ const PeopleList = ({ updateData }) => {
     setPeopleName(e.target.value);
   };
 
-  const handleOpenModal = () => {
+  const handleOpenModal = (modeValue = "") => {
     setModalOpen(!modalOpen);
+    setMode(modeValue);
   };
 
   const handleAddPerson = () => {
@@ -46,35 +49,50 @@ const PeopleList = ({ updateData }) => {
           open={modalOpen}
           onClose={handleOpenModal}
         >
-          <div className={classes.modalContent}>
-            <TextField
-              size="small"
-              variant="outlined"
-              placeholder="Enter a name for the person"
-              onChange={handleChange}
-              fullWidth
-            />
-            <div className={classes.modalButtons}>
-              <Button
-                onClick={handleAddPerson}
-                variant="contained"
-                color="primary"
-              >
-                Add
-              </Button>
-              <Button
-                onClick={handleOpenModal}
-                variant="contained"
-                color="secondary"
-              >
-                Cancel
-              </Button>
+          {mode === "Add" ? (
+            <div className={classes.modalContent}>
+              <TextField
+                size="small"
+                variant="outlined"
+                placeholder="Enter a name for the person"
+                onChange={handleChange}
+                fullWidth
+              />
+              <div className={classes.modalButtons}>
+                <Button
+                  onClick={handleAddPerson}
+                  variant="contained"
+                  color="primary"
+                >
+                  Add
+                </Button>
+                <Button
+                  onClick={handleOpenModal}
+                  variant="contained"
+                  color="secondary"
+                >
+                  Cancel
+                </Button>
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className={classes.modalContent}>
+              <Grid container spacing={2}>
+                {peopleList?.map((p, idx) => (
+                  <Grid item xs={3}>
+                    <People key={idx} person={p} editMode={true} />
+                  </Grid>
+                ))}
+              </Grid>
+            </div>
+          )}
         </Modal>
         <Typography variant="h6">People</Typography>
         <div className={classes.list}>
-          <Avatar onClick={handleOpenModal}>+</Avatar>
+          <Avatar onClick={() => handleOpenModal("Add")}>+</Avatar>
+          {peopleList.length !== 0 && (
+            <Avatar onClick={() => handleOpenModal("Delete")}>-</Avatar>
+          )}
           {peopleList?.map((p, idx) => (
             <People key={idx} person={p} />
           ))}

@@ -1,11 +1,11 @@
 import React from "react";
-import { Avatar, Typography } from "@material-ui/core";
+import { Avatar, Typography, Button } from "@material-ui/core";
 
 import useStyles from "./styles";
 import { useSelector } from "react-redux";
 import Ant from "../../../images/Badger.svg";
 
-const People = ({ person }) => {
+const People = ({ person, editMode = false }) => {
   const classes = useStyles();
   // const expenses = useSelector((state) => state.expense.expenses);
   const { name } = person;
@@ -23,6 +23,7 @@ const People = ({ person }) => {
       <Avatar src={Ant}></Avatar>
       <Typography variant="p">{name}</Typography>
       <Typography variant="p">${amountPaid}</Typography>
+      {editMode && <Button color="secondary">X</Button>}
     </div>
   );
 };

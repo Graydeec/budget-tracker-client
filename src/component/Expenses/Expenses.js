@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Expense from "./Expense/Expense";
 import useStyles from "./styles";
@@ -19,6 +19,7 @@ import * as actionType from "../../constants/actionTypes";
 const Expenses = ({ expenses }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const exps = useSelector((state) => state.expense.expenses);
 
   const StyledTableCell = withStyles((theme) => ({
     head: {
@@ -61,6 +62,8 @@ const Expenses = ({ expenses }) => {
     dispatch({ type: actionType.EXPENSE_FETCH_ALL, payload: rows });
   }, []);
 
+  console.log("expes", exps);
+
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
@@ -78,7 +81,7 @@ const Expenses = ({ expenses }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {expenses?.map((row, idx) => (
+              {exps?.map((row, idx) => (
                 <StyledTableRow key={row.name + idx}>
                   <StyledTableCell>{row.name}</StyledTableCell>
                   <StyledTableCell>{row.amount}</StyledTableCell>

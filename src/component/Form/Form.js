@@ -7,22 +7,33 @@ import {
   Button,
   Checkbox,
   FormControlLabel,
+  NativeSelect,
 } from "@material-ui/core";
 
 import useStyles from "./styles";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { EXPENSE_CREATE } from "../../constants/actionTypes";
 
 const initialState = { name: "", amount: 0, payer: "", people: [] };
-const Form = () => {
+const Form = ({ updateData }) => {
   const classes = useStyles();
   const [formData, setFormData] = useState(initialState);
   const personAll = useSelector((state) => state.person.persons);
-
-  const handleTextChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const dispatch = useDispatch();
 
   console.log(formData);
+
+  const handleTextChange = (e) => {
+    if (e.target.name === "amount") {
+      setFormData({ ...formData, [e.target.name]: parseFloat(e.target.value) });
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
+  };
+
+  const handlePayerChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleCheckBoxChange = (e, checked) => {
     if (checked) {
@@ -36,6 +47,32 @@ const Form = () => {
         people: formData.people.filter((p) => p !== e.target.value),
       });
     }
+  };
+
+  const handleAllChange = (e, checked) => {
+    console.log(checked);
+
+    if (checked) {
+      setFormData({
+        ...formData,
+        people: personAll.map((p) => p._id),
+      });
+    } else {
+      setFormData({
+        ...formData,
+        people: [],
+      });
+    }
+  };
+
+  const handleClear = () => {
+    setFormData(initialState);
+  };
+
+  const handleSubmit = () => {
+    dispatch({ type: EXPENSE_CREATE, payload: formData });
+    updateData();
+    setFormData(initialState);
   };
 
   return (
@@ -52,20 +89,35 @@ const Form = () => {
           <Typography>Amount</Typography>
           <TextField
             name="amount"
+            type="number"
             value={formData.amount}
             onChange={handleTextChange}
           ></TextField>
           <Typography>Payer</Typography>
           <div className={classes.payField}>
-            {personAll?.map((p) => (
-              <FormControlLabel
-                control={<Checkbox name={`payer-${p.name}`} color="primary" />}
-                label={p.name}
-              />
-            ))}
+            <NativeSelect
+              value={formData.payer}
+              name="payer"
+              onChange={handlePayerChange}
+            >
+              {personAll?.map((p) => (
+                <option value={p.name}>{p.name}</option>
+              ))}
+            </NativeSelect>
           </div>
           <Typography>NumberOfPeople</Typography>
           <div className={classes.peopleField}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  name="all"
+                  color="primary"
+                  onChange={handleAllChange}
+                  checked={personAll.length === formData.people.length}
+                />
+              }
+              label="ALL"
+            />
             {personAll?.map((p) => (
               <FormControlLabel
                 control={
@@ -74,14 +126,17 @@ const Form = () => {
                     color="primary"
                     onChange={handleCheckBoxChange}
                     value={p._id}
+                    checked={formData.people.includes(p._id)}
                   />
                 }
                 label={p.name}
               />
             ))}
           </div>
-          <Button type="submit">Submit</Button>
-          <Button>Clear</Button>
+          <Button type="submit" onClick={handleSubmit}>
+            Submit
+          </Button>
+          <Button onClick={handleClear}>Clear</Button>
         </FormControl>
       </Paper>
     </div>
