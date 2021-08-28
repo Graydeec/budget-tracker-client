@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import CssBaseline from "@material-ui/core/CssBaseline";
 
 import Header from "./component/Header/Header";
 import Signup from "./component/Auth/Signup/Signup";

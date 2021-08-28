@@ -70,7 +70,11 @@ const Form = ({ updateData }) => {
   };
 
   const handleSubmit = () => {
-    dispatch({ type: EXPENSE_CREATE, payload: formData });
+    console.log(formData);
+    dispatch({
+      type: EXPENSE_CREATE,
+      payload: { ...formData, numofpeople: formData.people.length },
+    });
     updateData();
     setFormData(initialState);
   };
