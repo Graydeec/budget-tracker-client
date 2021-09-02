@@ -2,7 +2,6 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export default makeStyles((theme) => ({
   root: {
-    padding: theme.spacing(5),
     borderRadius: theme.spacing(2),
     background: "rgb(238,174,202)",
     background:

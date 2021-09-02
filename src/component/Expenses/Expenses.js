@@ -10,13 +10,14 @@ import {
   TableRow,
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
+import EditIcon from "@material-ui/icons/Edit";
 import { useDispatch, useSelector } from "react-redux";
 
 import Expense from "./Expense/Expense";
 import useStyles from "./styles";
 import * as actionType from "../../constants/actionTypes";
 
-const Expenses = ({ expenses }) => {
+const Expenses = ({ expenses, handleEdit }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const exps = useSelector((state) => state.expense.expenses);
@@ -62,6 +63,8 @@ const Expenses = ({ expenses }) => {
     dispatch({ type: actionType.EXPENSE_FETCH_ALL, payload: rows });
   }, []);
 
+  handleEdit = () => {};
+
   console.log("expes", exps);
 
   return (
@@ -78,6 +81,7 @@ const Expenses = ({ expenses }) => {
                 <StyledTableCell>Amount</StyledTableCell>
                 <StyledTableCell>Payer</StyledTableCell>
                 <StyledTableCell>#People</StyledTableCell>
+                <StyledTableCell>Edit</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -87,6 +91,9 @@ const Expenses = ({ expenses }) => {
                   <StyledTableCell>{row.amount}</StyledTableCell>
                   <StyledTableCell>{row.payer}</StyledTableCell>
                   <StyledTableCell>{row.numofpeople}</StyledTableCell>
+                  <StyledTableCell>
+                    <EditIcon onClick={handleEdit} />
+                  </StyledTableCell>
                 </StyledTableRow>
               ))}
             </TableBody>

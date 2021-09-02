@@ -43,7 +43,7 @@ const PeopleList = ({ updateData }) => {
 
   return (
     <div>
-      <Paper className={classes.paper}>
+      <Paper className={classes.root}>
         <Modal
           className={classes.modal}
           open={modalOpen}

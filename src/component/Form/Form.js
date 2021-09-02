@@ -15,9 +15,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { EXPENSE_CREATE } from "../../constants/actionTypes";
 
 const initialState = { name: "", amount: 0, payer: "", people: [] };
-const Form = ({ updateData }) => {
+const Form = ({ updateData, updateFormData, formData }) => {
   const classes = useStyles();
-  const [formData, setFormData] = useState(initialState);
   const personAll = useSelector((state) => state.person.persons);
   const dispatch = useDispatch();
 
@@ -25,24 +24,27 @@ const Form = ({ updateData }) => {
 
   const handleTextChange = (e) => {
     if (e.target.name === "amount") {
-      setFormData({ ...formData, [e.target.name]: parseFloat(e.target.value) });
+      updateFormData({
+        ...formData,
+        [e.target.name]: parseFloat(e.target.value),
+      });
     } else {
-      setFormData({ ...formData, [e.target.name]: e.target.value });
+      updateFormData({ ...formData, [e.target.name]: e.target.value });
     }
   };
 
   const handlePayerChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    updateFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleCheckBoxChange = (e, checked) => {
     if (checked) {
-      setFormData({
+      updateFormData({
         ...formData,
         people: [...formData.people, e.target.value],
       });
     } else {
-      setFormData({
+      updateFormData({
         ...formData,
         people: formData.people.filter((p) => p !== e.target.value),
       });
@@ -53,12 +55,12 @@ const Form = ({ updateData }) => {
     console.log(checked);
 
     if (checked) {
-      setFormData({
+      updateFormData({
         ...formData,
         people: personAll.map((p) => p._id),
       });
     } else {
-      setFormData({
+      updateFormData({
         ...formData,
         people: [],
       });
@@ -66,7 +68,7 @@ const Form = ({ updateData }) => {
   };
 
   const handleClear = () => {
-    setFormData(initialState);
+    updateFormData(initialState);
   };
 
   const handleSubmit = () => {
@@ -76,7 +78,7 @@ const Form = ({ updateData }) => {
       payload: { ...formData, numofpeople: formData.people.length },
     });
     updateData();
-    setFormData(initialState);
+    updateFormData(initialState);
   };
 
   return (
