@@ -17,7 +17,7 @@ import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOut
 import useStyle from "./styles";
 import UserNotSignIn from "../Error/UserNotSignIn/UserNotSignIn";
 
-const initialFormData = { name: "", createdAt: "", creator: "", users: [] };
+const initialFormData = { name: "", createdAt: "", creator: "", creatorId: "" };
 const User = () => {
   const [openModal, setOpenModal] = useState(false);
   const [formData, setFormData] = useState(initialFormData);
@@ -25,7 +25,8 @@ const User = () => {
   const dispatch = useDispatch();
   const classes = useStyle();
   const user = JSON.parse(localStorage.getItem("profile"));
-  const userTrips = useState([]);
+
+  console.log("hi", trips);
 
   useEffect(() => {
     if (user?.result?._id) dispatch(getUserTrips(user?.result?._id));
@@ -40,8 +41,8 @@ const User = () => {
       createTrip({
         ...formData,
         createdAt: getToday(),
-        creator: user?.result?._id,
-        users: [user?.result?._id],
+        creator: user?.result?.name,
+        creatorId: user?.result?._id,
       })
     );
     handleOpenModal();

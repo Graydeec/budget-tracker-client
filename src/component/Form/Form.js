@@ -12,14 +12,25 @@ import {
 
 import useStyles from "./styles";
 import { useSelector, useDispatch } from "react-redux";
+import { createExpense, updateExpense } from "../../actions/expense";
 import { EXPENSE_CREATE } from "../../constants/actionTypes";
 
-const initialState = { name: "", amount: 0, payer: "", people: [] };
-const Form = ({ updateData, updateFormData, formData }) => {
+const initialState = { description: "", amount: 0, payer: "", persons: [] };
+const Form = ({
+  updateData,
+  updateFormData,
+  formData,
+  tripId,
+  editMode,
+  setEditMode,
+}) => {
   const classes = useStyles();
   const personAll = useSelector((state) => state.person.persons);
+  console.log("all people", personAll);
   const dispatch = useDispatch();
-
+  if (formData.payer === "" && personAll.length !== 0) {
+    formData.payer = personAll[0]?._id;
+  }
   console.log(formData);
 
   const handleTextChange = (e) => {
@@ -41,12 +52,12 @@ const Form = ({ updateData, updateFormData, formData }) => {
     if (checked) {
       updateFormData({
         ...formData,
-        people: [...formData.people, e.target.value],
+        persons: [...formData.persons, e.target.value],
       });
     } else {
       updateFormData({
         ...formData,
-        people: formData.people.filter((p) => p !== e.target.value),
+        persons: formData.persons.filter((p) => p !== e.target.value),
       });
     }
   };
@@ -57,12 +68,12 @@ const Form = ({ updateData, updateFormData, formData }) => {
     if (checked) {
       updateFormData({
         ...formData,
-        people: personAll.map((p) => p._id),
+        persons: personAll.map((p) => p._id),
       });
     } else {
       updateFormData({
         ...formData,
-        people: [],
+        persons: [],
       });
     }
   };
@@ -72,11 +83,17 @@ const Form = ({ updateData, updateFormData, formData }) => {
   };
 
   const handleSubmit = () => {
-    console.log(formData);
-    dispatch({
-      type: EXPENSE_CREATE,
-      payload: { ...formData, numofpeople: formData.people.length },
-    });
+    console.log("update", editMode);
+    if (formData.persons.length === 0) {
+      console.log("Invalid people.");
+      return;
+    }
+    if (editMode) {
+      dispatch(updateExpense(formData));
+    } else {
+      dispatch(createExpense({ ...formData, tripId }));
+    }
+    setEditMode(false);
     updateData();
     updateFormData(initialState);
   };
@@ -88,8 +105,8 @@ const Form = ({ updateData, updateFormData, formData }) => {
         <FormControl className={classes.form}>
           <Typography>Name</Typography>
           <TextField
-            name="name"
-            value={formData.name}
+            name="description"
+            value={formData.description}
             onChange={handleTextChange}
           ></TextField>
           <Typography>Amount</Typography>
@@ -107,7 +124,7 @@ const Form = ({ updateData, updateFormData, formData }) => {
               onChange={handlePayerChange}
             >
               {personAll?.map((p) => (
-                <option value={p.name}>{p.name}</option>
+                <option value={p._id}>{p.name}</option>
               ))}
             </NativeSelect>
           </div>
@@ -119,7 +136,7 @@ const Form = ({ updateData, updateFormData, formData }) => {
                   name="all"
                   color="primary"
                   onChange={handleAllChange}
-                  checked={personAll.length === formData.people.length}
+                  checked={personAll.length === formData.persons.length}
                 />
               }
               label="ALL"
@@ -132,7 +149,7 @@ const Form = ({ updateData, updateFormData, formData }) => {
                     color="primary"
                     onChange={handleCheckBoxChange}
                     value={p._id}
-                    checked={formData.people.includes(p._id)}
+                    checked={formData.persons.includes(p._id)}
                   />
                 }
                 label={p.name}

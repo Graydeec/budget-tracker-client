@@ -16,7 +16,7 @@ const TripItem = ({ trip }) => {
   const { name, createdAt, creator, _id } = trip;
 
   useEffect(async () => {
-    console.log("creator", creator);
+    console.log("creator00", _id);
     const info = await getUserInfo(creator);
 
     setCreatorName(info?.data?.existingUser?.name);
@@ -26,7 +26,7 @@ const TripItem = ({ trip }) => {
     console.log("event", e);
     e.stopPropagation();
     dispatch({ type: TRIP_CURRENT, payload: id });
-    history.push("/trip");
+    history.push(`/trip/${trip._id}`);
   };
 
   const handleDelete = (e, id) => {

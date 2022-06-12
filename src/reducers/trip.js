@@ -7,7 +7,7 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case actionType.TRIP_FETCH_ALL:
-      return { ...state, trips: [...action.payload?.data?.trips] };
+      return { ...state, trips: [...action.payload?.data] };
     case actionType.TRIP_CURRENT:
       return { ...state, trip: action.payload };
     case actionType.TRIP_CREATE:

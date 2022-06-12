@@ -22,7 +22,7 @@ function App() {
             <Route path="/signup" component={Signup} />
             <Route path="/signin" component={Signin} />
             <Route path="/user" component={User} />
-            <Route path="/trip" component={Trip} />
+            <Route path="/trip/:tripId" component={Trip} />
             <Route component={Error} />
           </Switch>
         </div>

@@ -24,7 +24,7 @@ const PeopleList = ({ updateData }) => {
   //const peopleList = [];
   const tripid = useSelector((state) => state.trip.trip);
   const dispatch = useDispatch();
-
+  console.log(peopleList);
   const handleChange = (e) => {
     setPeopleName(e.target.value);
   };
@@ -35,7 +35,7 @@ const PeopleList = ({ updateData }) => {
   };
 
   const handleAddPerson = () => {
-    dispatch(createPerson(tripid, { name: peopleName }));
+    dispatch(createPerson({ name: peopleName, tripId: tripid }));
     setPeopleName("");
     updateData();
     handleOpenModal();
