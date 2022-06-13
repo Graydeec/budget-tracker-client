@@ -1,6 +1,6 @@
 # Budget Tracker
 
-[Budget Tracker]() is an online website that helps user to keep track of expenses for a trip. It helps user to calculate the expenses for each person in the trip.
+[Budget Tracker](https://trip-budget-tracker-split.herokuapp.com/) is an online website that helps user to keep track of expenses for a trip. It helps user to calculate the expenses for each person in the trip.
 
 ## Preview
 
