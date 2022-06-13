@@ -7,7 +7,7 @@
 <img src='./images/budget-tracker-auth.png' alt='Auth View' />
 <img src='./images/budget-tracker-userpage.png' alt='User View' />
 <img src='./images/budget-tracker-expense-tracking-page.png' alt='Expenses View' />
-<img src='./images/budget-tracker-with-expenses.png' alt='Example View' />
+<img src='./images/budget-track-with-expenses.png' alt='Example View' />
 
 ## Guide
 
