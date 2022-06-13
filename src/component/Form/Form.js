@@ -26,12 +26,13 @@ const Form = ({
 }) => {
   const classes = useStyles();
   const personAll = useSelector((state) => state.person.persons);
-  console.log("all people", personAll);
   const dispatch = useDispatch();
   if (formData.payer === "" && personAll.length !== 0) {
     formData.payer = personAll[0]?._id;
+  } else if (personAll.length === 0) {
+    formData.payer = "";
   }
-  console.log(formData);
+  console.log("data", personAll, formData);
 
   const handleTextChange = (e) => {
     if (e.target.name === "amount") {
@@ -85,7 +86,6 @@ const Form = ({
   const handleSubmit = () => {
     console.log("update", editMode);
     if (formData.persons.length === 0) {
-      console.log("Invalid people.");
       return;
     }
     if (editMode) {
@@ -101,7 +101,7 @@ const Form = ({
   return (
     <div>
       <Paper className={classes.root}>
-        =<Typography variant="h3">Expense Form</Typography>
+        <Typography variant="h3">Expense Form</Typography>
         <FormControl className={classes.form}>
           <Typography>Name</Typography>
           <TextField

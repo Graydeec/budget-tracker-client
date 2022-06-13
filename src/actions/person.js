@@ -17,10 +17,8 @@ export const createPerson = (formData) => async (dispatch) => {
 };
 
 export const deletePerson = (id) => async (dispatch) => {
-  console.log("hi");
   try {
     await api.deletePerson(id);
-    console.log("Deleted good");
     dispatch({ type: actionType.PERSON_DELETE, payload: id });
   } catch (error) {
     console.log(error);

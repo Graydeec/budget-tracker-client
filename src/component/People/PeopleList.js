@@ -24,7 +24,6 @@ const PeopleList = ({ updateData }) => {
   //const peopleList = [];
   const tripid = useSelector((state) => state.trip.trip);
   const dispatch = useDispatch();
-  console.log(peopleList);
   const handleChange = (e) => {
     setPeopleName(e.target.value);
   };
@@ -38,8 +37,12 @@ const PeopleList = ({ updateData }) => {
     dispatch(createPerson({ name: peopleName, tripId: tripid }));
     setPeopleName("");
     updateData();
-    handleOpenModal();
+    handleOpenModal("add");
   };
+
+  if (modalOpen && mode === "delete" && peopleList.length === 0) {
+    setModalOpen(false);
+  }
 
   return (
     <div>
@@ -49,7 +52,7 @@ const PeopleList = ({ updateData }) => {
           open={modalOpen}
           onClose={handleOpenModal}
         >
-          {mode === "Add" ? (
+          {mode === "add" ? (
             <div className={classes.modalContent}>
               <TextField
                 size="small"
@@ -89,9 +92,9 @@ const PeopleList = ({ updateData }) => {
         </Modal>
         <Typography variant="h6">People</Typography>
         <div className={classes.list}>
-          <Avatar onClick={() => handleOpenModal("Add")}>+</Avatar>
+          <Avatar onClick={() => handleOpenModal("add")}>+</Avatar>
           {peopleList.length !== 0 && (
-            <Avatar onClick={() => handleOpenModal("Delete")}>-</Avatar>
+            <Avatar onClick={() => handleOpenModal("delete")}>-</Avatar>
           )}
           {peopleList?.map((p, idx) => (
             <People key={idx} person={p} />

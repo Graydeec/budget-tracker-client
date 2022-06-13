@@ -39,10 +39,7 @@ const People = ({ person, editMode = false }) => {
 
   const handleClick = () => {
     if (amountPaid === 0 && amountOwe === 0) {
-      console.log("delete person clicked", person._id);
       dispatch(deletePerson(person._id));
-    } else {
-      console.log("People is involved in expenses.");
     }
   };
 
