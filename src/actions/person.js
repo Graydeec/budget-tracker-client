@@ -6,11 +6,9 @@ export const getPersons = () => async (dispatch) => {
 };
 
 export const createPerson = (formData) => async (dispatch) => {
-  console.log(formData);
   try {
-    await api.addPersonIntoCollection(formData);
-    console.log("done");
-    dispatch({ type: actionType.PERSON_CREATE, payload: formData });
+    const { data } = await api.addPersonIntoCollection(formData);
+    dispatch({ type: actionType.PERSON_CREATE, payload: data });
   } catch (error) {
     console.log(error);
   }

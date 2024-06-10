@@ -21,7 +21,6 @@ const PeopleList = ({ updateData }) => {
   const [mode, setMode] = useState("");
   const [peopleName, setPeopleName] = useState("");
   const peopleList = useSelector((state) => state.person.persons);
-  //const peopleList = [];
   const tripid = useSelector((state) => state.trip.trip);
   const dispatch = useDispatch();
   const handleChange = (e) => {
@@ -36,7 +35,6 @@ const PeopleList = ({ updateData }) => {
   const handleAddPerson = () => {
     dispatch(createPerson({ name: peopleName, tripId: tripid }));
     setPeopleName("");
-    updateData();
     handleOpenModal("add");
   };
 
@@ -81,9 +79,9 @@ const PeopleList = ({ updateData }) => {
           ) : (
             <div className={classes.modalContent}>
               <Grid container spacing={2}>
-                {peopleList?.map((p, idx) => (
+                {peopleList?.map((p) => (
                   <Grid item xs={3}>
-                    <People key={idx} person={p} editMode={true} />
+                    <People key={p._id} person={p} editMode={true} />
                   </Grid>
                 ))}
               </Grid>
@@ -96,8 +94,8 @@ const PeopleList = ({ updateData }) => {
           {peopleList.length !== 0 && (
             <Avatar onClick={() => handleOpenModal("delete")}>-</Avatar>
           )}
-          {peopleList?.map((p, idx) => (
-            <People key={idx} person={p} />
+          {peopleList?.map((p) => (
+            <People key={p._id} person={p} />
           ))}
         </div>
       </Paper>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Typography,
   Paper,
@@ -14,17 +14,13 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { useDispatch, useSelector } from "react-redux";
 
-import Expense from "./Expense/Expense";
 import useStyles from "./styles";
-import * as actionType from "../../constants/actionTypes";
-import { getExpenses, deleteExpense } from "../../actions/expense";
+import { deleteExpense } from "../../actions/expense";
 
 const Expenses = ({ tripId, expenses, handleEdit, updateData }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const exp = useSelector((state) => state.expense.expenses);
   const persons = useSelector((state) => state.person.persons);
-  console.log(tripId);
 
   const StyledTableCell = withStyles((theme) => ({
     head: {
@@ -45,16 +41,9 @@ const Expenses = ({ tripId, expenses, handleEdit, updateData }) => {
   }))(TableRow);
 
   const handleDelete = (id) => {
-    console.log("You clicked it", id);
     dispatch(deleteExpense(id));
     updateData();
   };
-
-  const getPayerName = (id) => {
-    persons.forEach();
-  };
-
-  console.log("expes", exp);
 
   return (
     <div className={classes.root}>

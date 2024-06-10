@@ -43,7 +43,6 @@ export default makeStyles((theme) => ({
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(3, 4, 2),
-    display: "flex",
     flexDirection: "column",
     width: "50vh",
   },

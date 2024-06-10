@@ -7,6 +7,7 @@ const Input = ({
   handleChange,
   content,
   placeholder,
+  value,
   error = false,
   type = "text",
 }) => {
@@ -19,6 +20,7 @@ const Input = ({
         name={name}
         variant="outlined"
         size="small"
+        value={value}
         placeholder={placeholder}
         onChange={handleChange}
         helperText={error ? `Invalid ${name}` : ""}

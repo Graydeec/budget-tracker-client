@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Paper,
   FormControl,
@@ -13,7 +13,6 @@ import {
 import useStyles from "./styles";
 import { useSelector, useDispatch } from "react-redux";
 import { createExpense, updateExpense } from "../../actions/expense";
-import { EXPENSE_CREATE } from "../../constants/actionTypes";
 
 const initialState = { description: "", amount: 0, payer: "", persons: [] };
 const Form = ({
@@ -32,7 +31,6 @@ const Form = ({
   } else if (personAll.length === 0) {
     formData.payer = "";
   }
-  console.log("data", personAll, formData);
 
   const handleTextChange = (e) => {
     if (e.target.name === "amount") {
@@ -64,8 +62,6 @@ const Form = ({
   };
 
   const handleAllChange = (e, checked) => {
-    console.log(checked);
-
     if (checked) {
       updateFormData({
         ...formData,
@@ -84,7 +80,6 @@ const Form = ({
   };
 
   const handleSubmit = () => {
-    console.log("update", editMode);
     if (formData.persons.length === 0) {
       return;
     }

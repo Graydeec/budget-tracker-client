@@ -7,12 +7,11 @@ import {
   Typography,
   Modal,
   TextField,
-  Grid,
 } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 
 import TripItem from "../TripItem/TripItem";
-import { getUserTrips, createTrip, deleteTrip } from "../../actions/trip";
+import { getUserTrips, createTrip } from "../../actions/trip";
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 import useStyle from "./styles";
 import UserNotSignIn from "../Error/UserNotSignIn/UserNotSignIn";
@@ -26,11 +25,9 @@ const User = () => {
   const classes = useStyle();
   const user = JSON.parse(localStorage.getItem("profile"));
 
-  console.log("hi", trips);
-
   useEffect(() => {
     if (user?.result?._id) dispatch(getUserTrips(user?.result?._id));
-  }, [dispatch]);
+  }, [dispatch, user?.result?._id]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, name: e.target.value });

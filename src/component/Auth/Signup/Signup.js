@@ -18,9 +18,6 @@ import { ERROR_FALSE, LOADING_DONE } from "../../../constants/actionTypes.js";
 const initialState = { name: "", email: "", password: "", confirmPassword: "" };
 const Signup = () => {
   const [formData, setFormData] = useState(initialState);
-  const [validName, setValidName] = useState(true);
-  const [validEmail, setValidEmail] = useState(true);
-  const [validPassword, setValidPassword] = useState(true);
   const error = useSelector((state) => state.auth.errors);
   const loading = useSelector((state) => state.auth.loading);
   const history = useHistory();
@@ -30,7 +27,7 @@ const Signup = () => {
   useEffect(() => {
     dispatch({ type: ERROR_FALSE });
     dispatch({ type: LOADING_DONE });
-  }, []);
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -60,22 +57,22 @@ const Signup = () => {
               name="name"
               content="Name"
               placeholder="John Smith"
+              value={formData.name}
               handleChange={handleChange}
-              error={!validName}
             />
             <Input
               name="email"
               content="Email"
               placeholder="johnsmith@mail.com"
+              value={formData.email}
               handleChange={handleChange}
-              error={!validEmail}
             />
             <Input
               name="password"
               content="Password"
               placeholder="password"
               handleChange={handleChange}
-              error={!validPassword}
+              value={formData.password}
               type="password"
             />
             <Input
@@ -83,6 +80,7 @@ const Signup = () => {
               content="Confirm Password"
               placeholder="password"
               handleChange={handleChange}
+              value={formData.confirmPassword}
               type="password"
             />
             {error !== null && (

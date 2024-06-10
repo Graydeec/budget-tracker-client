@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
 import {
-  Grid,
   Container,
   Paper,
-  TextField,
   Typography,
   Button,
-  Avatar,
   CircularProgress,
   FormControl,
   Modal,
@@ -35,7 +32,7 @@ const Signin = () => {
   useEffect(() => {
     dispatch({ type: ERROR_FALSE });
     dispatch({ type: LOADING_DONE });
-  }, []);
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,8 +43,6 @@ const Signin = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
-  console.log("error", error, error !== null);
 
   return (
     <div>

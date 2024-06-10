@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Typography, Paper, Grid } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { Grid } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
@@ -9,7 +8,7 @@ import Expenses from "../Expenses/Expenses";
 import Form from "../Form/Form";
 import useStyles from "./styles";
 import UserNotSignIn from "../Error/UserNotSignIn/UserNotSignIn";
-import { getTripInfo, getTripPersons, getTripExpenses } from "../../api";
+import { getTripPersons, getTripExpenses } from "../../api";
 import * as actionType from "../../constants/actionTypes";
 
 const initialState = {
@@ -30,25 +29,24 @@ const Trip = () => {
   const expenses = useSelector((state) => state.expense.expenses);
   const user = JSON.parse(localStorage.getItem("profile"));
 
-  useEffect(async () => {
-    if (!tripId) return;
+  useEffect(() => {
+    async function fetchData() {
+      if (!tripId) return;
 
-    const info = await getTripInfo(tripId);
+      const persons = await getTripPersons(tripId);
+      const expenses = await getTripExpenses(tripId);
 
-    const persons = await getTripPersons(tripId);
-    const expenses = await getTripExpenses(tripId);
+      dispatch({
+        type: actionType.PERSON_FETCH_ALL,
+        payload: persons?.data,
+      });
 
-    console.log("yooo", persons);
-
-    dispatch({
-      type: actionType.PERSON_FETCH_ALL,
-      payload: persons?.data,
-    });
-
-    dispatch({
-      type: actionType.EXPENSE_FETCH_ALL,
-      payload: expenses?.data,
-    });
+      dispatch({
+        type: actionType.EXPENSE_FETCH_ALL,
+        payload: expenses?.data,
+      });
+    }
+    fetchData();
   }, [tripId, tracker, dispatch]);
 
   const updateData = () => {
@@ -69,16 +67,6 @@ const Trip = () => {
   return (
     <div className={classes.root}>
       <Grid container spacing={2}>
-        {/* <Grid item container>
-          <Grid item xs={12}>
-            <Paper className={classes.header}>
-              <Typography variant="h5" component={Link} to="/user">
-                Go Back
-              </Typography>
-              <Typography variant="h4">{trip?.name}</Typography>
-            </Paper>
-          </Grid>
-        </Grid> */}
         <Grid item xs={12} container spacing={2}>
           <Grid item xs={12} md={8} lg={9} container spacing={2}>
             <Grid item xs={12}>

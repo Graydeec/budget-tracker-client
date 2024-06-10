@@ -15,8 +15,6 @@ const People = ({ person, editMode = false }) => {
   let amountPaid = 0;
   let amountOwe = 0;
 
-  console.log("check exp", expenses);
-
   if (expenses.length > 0) {
     const expensesPaid = expenses.filter((exp) => exp.payer === _id);
     const moneyPaid = expensesPaid.map((exp) => exp.amount);
@@ -31,7 +29,6 @@ const People = ({ person, editMode = false }) => {
         Math.round((exp.amount / exp.persons.length + Number.EPSILON) * 100) /
         100
     );
-    console.log(moneyOwe);
     if (moneyOwe.length > 0) {
       amountOwe = moneyOwe.reduce(reducer);
     }
@@ -46,8 +43,8 @@ const People = ({ person, editMode = false }) => {
   return (
     <div className={classes.container}>
       <Avatar src={Ant}></Avatar>
-      <Typography variant="p">{name}</Typography>
-      <Typography variant="p">
+      <Typography variant="h6">{name}</Typography>
+      <Typography variant="h6">
         ${Math.round((amountPaid - amountOwe + Number.EPSILON) * 100) / 100}
       </Typography>
       {editMode && (

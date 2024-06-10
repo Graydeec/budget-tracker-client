@@ -25,7 +25,7 @@ const Header = () => {
     }
 
     setUser(JSON.parse(localStorage.getItem("profile")));
-  }, [location]);
+  }, [location, user?.token]);
 
   const logout = () => {
     localStorage.clear();

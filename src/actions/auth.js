@@ -28,7 +28,6 @@ export const signin = (formData, router, setLoading) => async (dispatch) => {
   try {
     const { data } = await api.userSignin(formData);
     dispatch({ type: AUTH, data });
-    console.log("you wish");
     dispatch({ type: LOADING_DONE });
     router.push("/user");
   } catch (error) {
@@ -94,7 +93,13 @@ export const signup = (formData, router) => async (dispatch) => {
     dispatch({ type: LOADING_DONE });
     router.push("/user");
   } catch (error) {
+    let error_message = error.message.includes("400")
+      ? "User already exists"
+      : "Something went wrong, please try again.";
     dispatch({ type: LOADING_DONE });
-    dispatch({ type: ERROR_TRUE, payload: { message: "Invalid information" } });
+    dispatch({
+      type: ERROR_TRUE,
+      payload: { message: error_message },
+    });
   }
 };
